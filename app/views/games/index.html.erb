@@ -1,0 +1,12 @@
+
+<% @games.each do |game| %>
+
+<p>
+<%= link_to 'Play v Computer', game_path(game), method: :get%>
+<%= link_to '2 Player', game_path(game), method: :get%>
+</p>
+
+
+<% end %>
+<%= link_to 'New Game', new_game_path %>
+

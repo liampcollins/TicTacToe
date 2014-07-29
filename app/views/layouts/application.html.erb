@@ -8,20 +8,21 @@
 </head>
 <body>
 
-   <% if current_user %>
-     <p> hello, <%= current_user.email %> </p>
+   <%# if current_user %>
+     <p> hello, <%#= current_user.email %> </p>
      <%= link_to 'Logout', logout_path, method: :delete, data: {confirm: "Are you sure?"} %>
-    <% else %>
+    <%# else %>
      <%= link_to 'Please login', login_path %>
      <%= link_to 'Sign Up', signup_path %>
 
-    <% end %>
+    <%# end %>
 
   <div id="container">
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    
     <% end %>
-
+    </div>
 <%= yield %>
 
 </body>
