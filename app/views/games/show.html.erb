@@ -1,0 +1,28 @@
+<h1>New game</h1>
+  <% @numbers = [*1..9] %>
+  
+  <% [*1..9].each do |n|%>
+    
+    <% if @numbers.include? (n) %>
+      
+      <%= form_for(@move) do |f| %>
+        <div class="field">
+          <%= f.label :cell_chosen, "#{n}" %>
+          <%= f.text_field :cell_chosen %>
+        </div>
+        <div class="field">
+          <%= f.hidden_field :game_id, value: @game.id  %>
+        </div>
+        <div class="actions"><%= f.submit "Submit" %></div>
+      <% @numbers.delete(n) %>
+      
+      <% end %>
+      
+      
+    
+    <% else %>
+      <%= @current_user_symbol %>
+      <% change_symbol(@current_user_symbol) %>
+      <% @numbers.delete(n) %>
+    <% end %>
+  <% end %>
