@@ -6,20 +6,31 @@ class MovesController < ApplicationController
   def create
     #USER MOVE
     @move = Move.new(params[:move])
+
     @move.user_id = current_user.id
+
     if @move.save
 
       #COMPUTER MOVE
       @numbers = [*1..9]
-      @moves_taken = Move.all.map{|x| x[:cell_chosen] if game_id = @move[:game_id] }
-      dd
-      @moves_left = @numbers - @moves_taken
+      game = Game.find(@move[:game_id])
+
+      moves_taken = game.moves.map do |x| 
+        x[:cell_chosen] 
+      end
+
+
+
+
+      moves_left = @numbers - moves_taken
       
-      @random = @moves_left.sample
+      random = moves_left.sample
       
       @move_comp = Move.new()
-      @move_comp.cell_chosen = @random
+pp
+      @move_comp.cell_chosen = random
       @move_comp.game_id = @move[:game_id]
+      @move_comp.user_id = 0
       
       if @move_comp.save 
       

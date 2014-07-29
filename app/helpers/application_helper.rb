@@ -1,7 +1,5 @@
 module ApplicationHelper
 
-
-
   def change_symbol(symbol)
     if symbol == "X"
       symbol = "O"
@@ -9,8 +7,4 @@ module ApplicationHelper
       symbol = "X"
     end
   end
-
-
-  
-
 end

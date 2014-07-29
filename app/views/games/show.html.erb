@@ -1,14 +1,14 @@
 <h1>New game</h1>
 
-  <% [*1..9].each do |n|%>
+  <% @numbers.each do |n|%>
     
-    <% if @numbers.include? (n) %>
+    <% if n.is_a? Integer %>
       
       <%= form_for(@move) do |f| %>
         <div class="field">
           <%= f.label :cell_chosen, "#{n}" %>
           <%= f.text_field :cell_chosen %>
-          <%= link_to "link", move_path  %>
+         
         </div>
         <div class="field">
           <%= f.hidden_field :game_id, value: @game.id  %>
@@ -20,8 +20,6 @@
       
     
     <% else %>
-      <%= @current_user_symbol %>
-
-      <% @current_user_symbol = change_symbol(@current_user_symbol) %>
+      <%= n %>
     <% end %>
   <% end %>
