@@ -9,11 +9,11 @@
 <body>
 
    <%# if current_user %>
-     <p> hello, <%#= current_user.email %> </p>
-     <%= link_to 'Logout', logout_path, method: :delete %>
+     <p> hello, <%= current_user.username %> </p>
+     <%= link_to 'Logout |', logout_path, method: :delete %>
     <%# else %>
-     <%= link_to 'Please login', login_path %>
-     <%= link_to 'Sign Up', signup_path %>
+     <%= link_to 'Please login |', login_path %>
+     <%= link_to 'Sign Up |', signup_path %>
      <%= link_to 'Home', games_path %>
 
     <%# end %>

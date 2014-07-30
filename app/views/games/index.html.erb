@@ -1,12 +1,12 @@
 
-<%= link_to 'New Game', new_game_path %>
+<%= link_to 'Choose Game Type', new_game_path %>
 
 
 <%= form_for(@game) do |f| %>
 <%= f.submit "Quick Play" %>
 
-
-<%= link_to 'Users', users_path %>
+<br>
+<%= link_to 'Leaderboard', users_path %>
 
 
 <% end %>
