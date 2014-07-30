@@ -10,11 +10,15 @@ class GamesController < ApplicationController
     @move = Move.new()
     @game = Game.find(params[:id])
     @numbers = [*1..9] 
-    
-    @xs = @game.moves.where(user_id: current_user.id).map { |move|  move.cell_chosen}
-    @os = @game.moves.where(user_id: 0).map { |move|  move.cell_chosen}
+    if @game.player2?
+    else
+      @game.player1 = current_user.id
+      @game.player2 = 0
+    end
+    @xs = @game.moves.where(user_id: @game.player1).map { |move|  move.cell_chosen}
+    @os = @game.moves.where(user_id: @game.player2).map { |move|  move.cell_chosen}
 
-  #Replace elements in numbers that are present in xs with X
+  #Replace elements in @numbers that are present in xs with X
     @xs.each do |x|
       if @numbers.include?(x)
         index = @numbers.index(x)
@@ -23,7 +27,7 @@ class GamesController < ApplicationController
       end
     end
 
-  #Replace elements in numbers that are present in os with O
+  #Replace elements in @numbers that are present in os with O
     @os.each do |o|
       if @numbers.include?(o)
         index = @numbers.index(o)
@@ -31,6 +35,12 @@ class GamesController < ApplicationController
         @numbers.insert(index, "O")
       end
     end 
+
+  #Define an array of user ids
+  # @game.player1 = current_user.id
+
+
+
   end
 
   def new

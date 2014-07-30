@@ -1,7 +1,28 @@
+<br>
+<br>
+
+
 <%= form_for(@game) do |f| %>
+<%= f.submit "Play V Computer" %>
+<% end %>
 
-<%= f.submit "Submit" %>
+<br>
+<br>
+<br>
 
+OR ELSE PLAY AGAINST OPPONENT
+
+<%= form_for(@game) do |f| %>
+<br>
+<%= f.label :player1 %><br />
+<%= f.collection_select :player1, User.all, :id, :username, prompt: true %>
+<br>
+<br>
+<%= f.label :player2 %><br />
+<%= f.collection_select :player2, User.all, :id, :username, prompt: true %>
+<br>
+
+<%= f.submit "Start 2 Player Game" %>
 <% end %>
 
 

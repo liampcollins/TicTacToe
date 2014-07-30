@@ -6,25 +6,54 @@ class MovesController < ApplicationController
   def create
     # USER MOVE
     @move = Move.new(params[:move])
-    @move.user_id = current_user.id
+    @game = Game.find(@move[:game_id])
+    if @game.player2
+      ids = [@game.player1, @game.player2]
+      #Assign who just took the move with a playing_player variable
+      #If no move.last then player 1, else call reverse function on
 
-    if @move.save      
-      @game = Game.find(@move[:game_id])
-      if @game.winner?
-        redirect_to :back, notice: "You've Won!"
-      elsif @game.no_winner?
-        redirect_to :back, notice: "No Winner"
+      if @game.moves.length != 0
+        @playing_player_id = @game.player_swap
+
+        @move.user_id = @playing_player_id
+
       else
-        @move_comp = @game.computer_move 
-        @move_comp.save
+        @playing_player_id = @game[:player1]
+        @move.user_id = @playing_player_id
+
+      end
+
+    else
+      @move.user_id = current_user.id
+    end
+
+    if @move.save 
+      if @game.player2
+
         if @game.winner?
-          redirect_to :back, notice: "You Lose!"
+          redirect_to :back, notice: "You've Won #{@move.user.username}! "
         elsif @game.no_winner?
           redirect_to :back, notice: "No Winner"
         else
-          redirect_to :back
+            other = User.find(ids - [@move.user_id])
+            redirect_to :back, notice: "Your turn #{other.last.username}"
         end
-        
+      else
+        if @game.winner?
+          redirect_to :back, notice: "You've Won #{@move.user.username}! "
+        elsif @game.no_winner?
+          redirect_to :back, notice: "No Winner"  
+        else
+        @move_comp = @game.computer_move 
+        @move_comp.save
+          if @game.winner?
+            redirect_to :back, notice: "You Lose!"
+          elsif @game.no_winner?
+            redirect_to :back, notice: "No Winner"
+          else 
+            redirect_to :back, notice: "Your turn #{current_user.email}"
+          end
+        end
       end
     end
   end
