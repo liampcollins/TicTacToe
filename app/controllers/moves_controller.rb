@@ -12,15 +12,12 @@ class MovesController < ApplicationController
       #Assign who just took the move with a playing_player variable
       #If no move.last then player 1, else call reverse function on
 
-      if @game.moves.length != 0
-        @playing_player_id = @game.player_swap
-
-        @move.user_id = @playing_player_id
-
-      else
+      if @game.moves.length == 0
         @playing_player_id = @game[:player1]
         @move.user_id = @playing_player_id
-
+      else
+        @playing_player_id = @game.player_swap
+        @move.user_id = @playing_player_id
       end
 
     else
@@ -28,9 +25,12 @@ class MovesController < ApplicationController
     end
 
     if @move.save 
+
       if @game.player2
 
-        if @game.winner?
+        if @game.game_winner?
+          @game.winner = @move.user_id
+          @game.save
           redirect_to :back, notice: "You've Won #{@move.user.username}! "
         elsif @game.no_winner?
           redirect_to :back, notice: "No Winner"
@@ -39,7 +39,9 @@ class MovesController < ApplicationController
             redirect_to :back, notice: "Your turn #{other.last.username}"
         end
       else
-        if @game.winner?
+        if @game.game_winner?
+          @game.winner = @move.user_id
+          @game.save
           redirect_to :back, notice: "You've Won #{@move.user.username}! "
         elsif @game.no_winner?
           redirect_to :back, notice: "No Winner"  

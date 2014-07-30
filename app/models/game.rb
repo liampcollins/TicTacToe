@@ -41,7 +41,7 @@ class Game < ActiveRecord::Base
 
   end
 
-  def winner?
+  def game_winner?
 
     last_player_id = moves.all.last.user_id
     moves_in_game = moves.map do |move|
@@ -84,13 +84,15 @@ class Game < ActiveRecord::Base
   end
 
   def player_swap
-  
+    
     if moves.all.last.user_id == player1
       playing_player_id = player2
     else
       playing_player_id = player1
     end
+
     playing_player_id
   end
+
 
 end
