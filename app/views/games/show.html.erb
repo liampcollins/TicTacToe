@@ -1,25 +1,25 @@
 <h1>New game</h1>
 
   <% @numbers.each do |n|%>
-    
+    <div class="cell">
     <% if n.is_a? Integer %>
       
       <%= form_for(@move) do |f| %>
         <div class="field">
-          <%= f.label :cell_chosen, "#{n}" %>
-          <%= f.text_field :cell_chosen %>
+          <%= f.hidden_field :cell_chosen, value: n %>
          
         </div>
         <div class="field">
           <%= f.hidden_field :game_id, value: @game.id  %>
         </div>
-        <div class="actions"><%= f.submit "Submit" %></div>
-      
+        <div class="cell_button"><%= f.submit "#{n}" %></div>
       <% end %>
-      
+
+
       
     
     <% else %>
       <%= n %>
     <% end %>
+  </div>
   <% end %>
