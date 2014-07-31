@@ -1,4 +1,7 @@
 
+<h1>WELCOME TO TIC TAC TOE</h1>
+
+
 <%= link_to 'Choose Game Type', new_game_path %>
 
 <br>
@@ -33,4 +36,8 @@ GAMES YOU'VE BEEN CHALLENGED TO
     <% end %>
   <% end %>
   </table>
+<% else%>
+
+<%= link_to 'Log-in to see if you've been challenged', login_path %><br>
+
 <% end %>

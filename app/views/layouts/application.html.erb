@@ -7,25 +7,30 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-   <% if current_user %>
-     <p> hello, <%= current_user.username %> </p>
-     <%= link_to 'Logout |', logout_path, method: :delete %>
-     <%= link_to 'Home', games_path %>
+  <nav>
+   <% if current_user %><br>
+     Hello, <%= current_user.username.capitalize %> <br>
+     <%= link_to 'Logout |', logout_path, method: :delete %><br>
+     <%= link_to 'Home', games_path %><br>
     <% else %>
-     <%= link_to 'Please login |', login_path %>
-     <%= link_to 'Sign Up |', signup_path %>
-     <%= link_to 'Home', games_path %>
+     <%= link_to 'Please login |', login_path %><br>
+     <%= link_to 'Sign Up |', signup_path %><br>
+     <%= link_to 'Home', games_path %><br>
 
     <% end %>
+  </nav>
+
+  <main>
+  <img alt="background image" src="http://thinlyspread.co.uk/wp-content/uploads/2014/06/Beach-Crafts.jpg" id="full-screen-background-image" /> 
 
   <div id="container">
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     
     <% end %>
-    </div>
+    
 <%= yield %>
-
+</div>
+  </main>
 </body>
 </html>
