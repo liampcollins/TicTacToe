@@ -9,7 +9,7 @@
   <% else %>
     <%= f.hidden_field :player1, value: -1 %>  
   <% end %>
-  <%= f.submit "Play V Computer" %>
+  <%= f.submit "Play To Lose V Our Super Loser-Computer" %>
 <% end %>
 
 <br>
@@ -25,7 +25,6 @@ Have condition that says log in to play two player
 
     <%= f.hidden_field :player1, value: current_user.id %> 
     Player 1: <%= current_user.username %>
-
   <br>
   <%= f.label :player2, "Who are you challenging?" %><br />
   <%= f.collection_select :player2, User.all, :id, :username, prompt: true %>

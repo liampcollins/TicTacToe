@@ -1,20 +1,36 @@
 
 <%= link_to 'Choose Game Type', new_game_path %>
 
-
-
-
-<%= form_for(@game) do |f| %>
-  <%= f.hidden_field :player2, value: 0 %>
-  <% if current_user %>
-    <%= f.hidden_field :player1, value: current_user.id %>
-  <% else %>
-    <%= f.hidden_field :player1, value: -1 %>  
-  <% end %>
-  <%= f.submit "Quick Play" %>
-<% end %>
-
-
-
 <br>
 <%= link_to 'Leaderboard', users_path %>
+
+<% if current_user %>
+GAMES YOU'VE BEEN CHALLENGED TO
+  <table>
+    <tr>
+      <th><%= link_to "Game id", :sort => "id" %></th>
+      <th><%= link_to "Player 1", :sort => "player1" %></th>
+      <th><%= link_to "Player 2", :sort => "player2" %></th>
+      <th><%= link_to "First Move", :sort => "first_move" %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  <% @games.each do |game| %>
+    <% if game.player2 %>
+      <% if game.player1 == current_user.id || game.player2 == current_user.id %>
+        <% if game.winner == nil %>
+        <tr>
+          <td><%= game.id %></td>
+          <td><%= game.player1 %></td>
+          <td><%= game.player2 %></td>
+          <td><%= game.first_move %></td>
+          <td><%= link_to 'Play', game_path(game.id) %></td>
+          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  </table>
+<% end %>

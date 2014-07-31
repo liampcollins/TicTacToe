@@ -1,27 +1,9 @@
 class Game < ActiveRecord::Base
   attr_accessible :first_move, :player1, :player2, :winner
 
-  # has_many :users
   has_many :moves
 
-  # def gameover?
-  #   # Check if there is a winner? -returns true if game is over
 
-  #   # -if no: Check if there are any moves left
-  #   # -returns true if game is over
-
-  #   # Create an array of the current user's moves values within game 
-  #   # Look at win conditions (represented as an multi-dimensional array of win positions)
-  #   # Loop through winning combinations to see if they match with user's moves
-
-  #   # returns false if not and then 
-  #   ## work out who is going to play (user/computer)
-  #   ## If user....
-  #   ## If computer -> Make a computers move.
-  #   ## Check gameover?
-  # end
-
-    ## Computer Move Method logic
   def computer_move
     numbers = [*1..9]
     
@@ -64,15 +46,18 @@ class Game < ActiveRecord::Base
       [3, 5, 7]
     ]
     
-    result = false
+    @result = false
     winning_arrays.each do |winning_array|
       # If the moves contains wins array
-      
+
       if (winning_array & moves_in_game) == winning_array
-        result = true
+        @result = true
+
       end
+
     end
-    result
+    
+    @result
   end
 
   def no_winner?
@@ -88,20 +73,37 @@ class Game < ActiveRecord::Base
     moves_left = numbers - moves_taken
   end
 
-  def player_swap
-    puts "-"*80
-    puts "last move user"
-    # binding.pry
-    # moves.all.each {|m| puts m.user_id}
-    puts moves.all.last.user_id
-    if moves.all.last.user_id == player1
-      player_id = player2
-    elsif moves.all.last.user_id == player2
-      player_id = player1
-    end
-
-    player_id
+  def swap_player
+    ids = [player1, player2]
+    next_player = (ids - [moves.last.user_id]).last
+    next_player
   end
 
+  def check_2_player_game_status
+    if game_winner?
+      self.winner = moves.last.user_id
+    end
+    self.next_player = swap_player
+    self.save
+    self
+  end
+end 
 
-end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

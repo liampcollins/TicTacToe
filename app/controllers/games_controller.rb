@@ -9,18 +9,25 @@ class GamesController < ApplicationController
   def show
     @move = Move.new()
     @game = Game.find(params[:id])
-    @next_to_move_id = 1
-    # @next_to_move_id = @game.next_player
+    
 
-
-    #IF USER HAS SELECTED @ PLAYER BUT BOTH PLAYERS NOT SELECTED REDIRECT
-
-    if @game.player1
-      if @game.player2 
-      else
-        redirect_to new_game_path, notice: "You must select 2 players to play a 2-player game"
+    if @game.moves.length == 0
+      if @game.first_move == 1
+        @game.next_player = @game.player1
+      elsif @game.first_move == 2
+        @game.next_player = @game.player2
       end
     end
+
+
+    # #IF USER HAS SELECTED @ PLAYER BUT BOTH PLAYERS NOT SELECTED REDIRECT
+
+    # if @game.player1
+    #   if @game.player2 
+    #   else
+    #     redirect_to new_game_path, notice: "You must select 2 players to play a 2-player game"
+    #   end
+    # end
 
 
     # if @game.player2?
@@ -78,6 +85,15 @@ class GamesController < ApplicationController
     redirect_to @game
     end
   end
+
+  def destroy
+    @game = Game.find(params[:id])
+    @game.destroy
+    redirect_to root_path
+  end
+
+
+
 end
 
 

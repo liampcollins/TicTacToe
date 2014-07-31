@@ -1,0 +1,46 @@
+
+<% if @game.winner %>
+  
+
+  <% @numbers.each do |n|%>
+    <div class="cell">
+    <% if n.is_a? Integer %>
+      GAME OVER
+    <% else %>
+      <%= n %>
+    <% end %>
+    </div>
+  <% end %>
+
+
+<% else %>
+  <% @numbers.each do |n|%>
+    <div class="cell">
+    <% if n.is_a? Integer %> 
+      <%= form_for(@move) do |f| %>
+        <div class="field">
+          <%= f.hidden_field :cell_chosen, value: n %> 
+        </div>
+        <div class="field">
+          <%= f.hidden_field :game_id, value: @game.id  %>
+        </div>
+        <% if @game.player2 != 0 %>
+          <div class="field">
+            <%= f.hidden_field :user_id, value: @game.next_player  %>
+          </div>
+        <% else %>
+          <div class="field">
+            <%= f.hidden_field :user_id, value: @game.player1  %>
+          </div>
+        <% end%>   
+        <div class="cell_button"><%= f.submit "#{n}" %></div>
+      <% end %>
+    <% else %>
+      <%= n %>
+    <% end %>
+  </div>
+  <% end %>
+<% end %>
+
+
+
