@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   attr_accessible :first_move, :player1, :player2, :winner
 
-  has_many :users
+  # has_many :users
   has_many :moves
 
   # def gameover?
@@ -44,8 +44,13 @@ class Game < ActiveRecord::Base
   def game_winner?
 
     last_player_id = moves.all.last.user_id
-    moves_in_game = moves.map do |move|
-      move.cell_chosen if move.user_id == last_player_id
+    moves_in_game = moves.all.map do |move|
+      if move.user_id == last_player_id
+        puts "cell chosen"
+        puts move.cell_chosen
+        puts "-"*80
+        move.cell_chosen
+      end
     end
 
     winning_arrays = [
@@ -84,14 +89,18 @@ class Game < ActiveRecord::Base
   end
 
   def player_swap
-    
+    puts "-"*80
+    puts "last move user"
+    # binding.pry
+    # moves.all.each {|m| puts m.user_id}
+    puts moves.all.last.user_id
     if moves.all.last.user_id == player1
-      playing_player_id = player2
-    else
-      playing_player_id = player1
+      player_id = player2
+    elsif moves.all.last.user_id == player2
+      player_id = player1
     end
 
-    playing_player_id
+    player_id
   end
 
 

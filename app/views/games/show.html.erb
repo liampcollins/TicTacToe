@@ -1,4 +1,24 @@
+
+<% if current_user %>
+<% @game.player1 = current_user.id %>
+<% end %>
+
+
+
+<% if @game.first_move == 1 %>
+  <% player = User.find(@game.player1) %>
+<% else %>
+  <% player = User.find(@game.player2) %>
+<% end %>
+
+<% if @game.moves.length == 0 %>
+You have first move <%= player.username %>
+<% end %>
+
+
 <h1>New game</h1>
+
+<br>
 
 
   <% @numbers.each do |n|%>

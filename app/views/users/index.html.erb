@@ -20,7 +20,11 @@
 
   <% @users.each do |user| %>
   <% user.wins = w.count(user.id)%>
-  <% user.win_precentage =  w.count(user.id) / players.count(user.id) %> 
+  <% if players.count(user.id) == 0 %>
+    <% user.win_precentage = 0 %>
+  <%else%>
+    <%user.win_precentage =  w.count(user.id) / players.count(user.id) %> 
+    <% end %>
   <% end %>
 
 <table>

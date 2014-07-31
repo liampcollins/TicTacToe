@@ -6,27 +6,37 @@ class MovesController < ApplicationController
   def create
     # USER MOVE
     @move = Move.new(params[:move])
+    
+    
     @game = Game.find(@move[:game_id])
     if @game.player2
       ids = [@game.player1, @game.player2]
       #Assign who just took the move with a playing_player variable
       #If no move.last then player 1, else call reverse function on
-
       if @game.moves.length == 0
-        @playing_player_id = @game[:player1]
-        @move.user_id = @playing_player_id
+
+        playing_player_id = @game.player1
+        @move.user_id = playing_player_id
+
       else
-        @playing_player_id = @game.player_swap
-        @move.user_id = @playing_player_id
+        puts "not the first move"
+        playing_player_id = @game.player_swap
+        @move.user_id = playing_player_id
       end
 
     else
-      @move.user_id = current_user.id
+      @player1 = current_user.id
+      @move.user_id = @player1
     end
 
     if @move.save 
+      puts "-"*80
+      puts "move saved"
+      puts @move.user_id
 
       if @game.player2
+        puts "-"*80
+        puts "2 player game"
 
         if @game.game_winner?
           @game.winner = @move.user_id
