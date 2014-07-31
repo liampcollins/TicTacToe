@@ -3,40 +3,37 @@
 
 
 <%= form_for(@game) do |f| %>
-<%= f.submit "Play V Computer" %>
+  <%= f.hidden_field :player2, value: 0 %>
+  <% if current_user %>
+    <%= f.hidden_field :player1, value: current_user.id %>
+  <% else %>
+    <%= f.hidden_field :player1, value: -1 %>  
+  <% end %>
+  <%= f.submit "Play V Computer" %>
 <% end %>
 
 <br>
 <br>
 <br>
 
-OR ELSE PLAY AGAINST OPPONENT
+OR ELSE CHALLENGE SOMEONE
 
 <%= form_for(@game) do |f| %>
 
+Have condition that says log in to play two player
+  
 
-<!-- If current user present player1 = current user, render PLayer 1 is current_user.username
- -->
-<% if current_user %>
-
-Player 1: <%= current_user.username %>
-
-<% else %>
+    <%= f.hidden_field :player1, value: current_user.id %> 
+    Player 1: <%= current_user.username %>
 
   <br>
-  <%= f.label :player1 %><br />
-  <%= f.collection_select :player1, User.all, :id, :username, prompt: true %>
+  <%= f.label :player2, "Who are you challenging?" %><br />
+  <%= f.collection_select :player2, User.all, :id, :username, prompt: true %>
   <br>
-<% end %>
-<br>
-<%= f.label :player2 %><br />
-<%= f.collection_select :player2, User.all, :id, :username, prompt: true %>
-<br>
-
-<%= f.label :first_move, "Click for Player 2 to have first move" %><br />
-<%= f.check_box :first_move, {:checked=>false}, "2", "1" %>
-<br>
-<%= f.submit "Start 2 Player Game" %>
+  <%= f.label :first_move, "Click to let them have first move" %><br />
+  <%= f.check_box :first_move, {:checked=>false}, "2", "1" %>
+  <br>
+  <%= f.submit "Start 2 Player Game" %>
 <% end %>
 
 

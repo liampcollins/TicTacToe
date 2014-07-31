@@ -1,46 +1,73 @@
 
 <% if current_user %>
-<% @game.player1 = current_user.id %>
+  <% @game.player1 = current_user.id %>
 <% end %>
 
 
+<!-- PUTTING FIRST MOVER MESSAGE - move out as first_mover method-->
+<% if current_user.id == @next_to_move_id %>
 
-<% if @game.first_move == 1 %>
-  <% player = User.find(@game.player1) %>
-<% else %>
-  <% player = User.find(@game.player2) %>
-<% end %>
-
+<% guest = "guest" %>
 <% if @game.moves.length == 0 %>
-You have first move <%= player.username %>
+  <% if @game.first_move == 1 %>
+    <% if @game.player1 > 0%>
+      <% player = User.find(@game.player1) %>
+      <% first_mover = player.username %>      
+    <% else %>
+      <% first_mover = guest %>
+    <% end %>
+  <% elsif @game.first_move == 2 %> 
+    <% if @game.player1 > 0%> 
+      <% player = User.find(@game.player1) %>
+      <% first_mover = player.username %>      
+    <% else %>
+      <% first_mover = guest %>
+    <% end %>
+  <% else %>
+  <% first_mover = guest %>
+  <% end %>
 <% end %>
+
+
+You have first move <%= first_mover %>
 
 
 <h1>New game</h1>
 
 <br>
 
-
+<% if @game.winner %>
+  <% @numbers.each do |n|%>
+    <div class="cell">
+    <% if n.is_a? Integer %>
+      GAME OVER
+    <% else %>
+      <%= n %>
+    <% end %>
+    </div>
+  <% end %>
+<% else %>
   <% @numbers.each do |n|%>
     <div class="cell">
     <% if n.is_a? Integer %>
       
       <%= form_for(@move) do |f| %>
         <div class="field">
-          <%= f.hidden_field :cell_chosen, value: n %>
-         
+          <%= f.hidden_field :cell_chosen, value: n %> 
         </div>
         <div class="field">
           <%= f.hidden_field :game_id, value: @game.id  %>
         </div>
         <div class="cell_button"><%= f.submit "#{n}" %></div>
       <% end %>
-
-
-      
-    
     <% else %>
       <%= n %>
     <% end %>
-  </div>
+    </div>
   <% end %>
+<% end %>
+<% else %>
+ not your turn
+<% end %>
+
+

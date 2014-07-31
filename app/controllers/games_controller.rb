@@ -9,16 +9,36 @@ class GamesController < ApplicationController
   def show
     @move = Move.new()
     @game = Game.find(params[:id])
-    @numbers = [*1..9] 
-    if @game.player2?
-    else
-      @game.player1 = current_user.id
-      @game.player2 = 0
+    @next_to_move_id = 1
+    # @next_to_move_id = @game.next_player
+
+
+    #IF USER HAS SELECTED @ PLAYER BUT BOTH PLAYERS NOT SELECTED REDIRECT
+
+    if @game.player1
+      if @game.player2 
+      else
+        redirect_to new_game_path, notice: "You must select 2 players to play a 2-player game"
+      end
     end
+
+
+    # if @game.player2?
+    # else
+    #   if current_user
+    #     @game.player1 = current_user.id
+    #   else
+    #     @game.player1 = 0
+    #   end
+    #   @game.player2 = 0
+    # end
+
+
+# DEFINING @NUMBERS ARRAY WHICH HOLDS AVAILABLE SPACES, Xs and Ox.
+    @numbers = [*1..9]
     @xs = @game.moves.where(user_id: @game.player1).map { |move|  move.cell_chosen}
     @os = @game.moves.where(user_id: @game.player2).map { |move|  move.cell_chosen}
-
-  #Replace elements in @numbers that are present in xs with X
+    #Replace elements in @numbers that are present in xs with X
     @xs.each do |x|
       if @numbers.include?(x)
         index = @numbers.index(x)
@@ -26,8 +46,7 @@ class GamesController < ApplicationController
         @numbers.insert(index, "X")
       end
     end
-
-  #Replace elements in @numbers that are present in os with O
+    #Replace elements in @numbers that are present in os with O
     @os.each do |o|
       if @numbers.include?(o)
         index = @numbers.index(o)
@@ -35,18 +54,20 @@ class GamesController < ApplicationController
         @numbers.insert(index, "O")
       end
     end 
-
-  #Define an array of user ids
-  # @game.player1 = current_user.id
-
-
-
   end
 
+
+
+
   def new
+  
   @game = Game.new
   end
   #current_user.current_game.move.new
+
+
+
+
 
   def create
     @game = Game.new(params[:game])
@@ -57,7 +78,6 @@ class GamesController < ApplicationController
     redirect_to @game
     end
   end
-
 end
 
 

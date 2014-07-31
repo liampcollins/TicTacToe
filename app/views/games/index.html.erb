@@ -2,11 +2,19 @@
 <%= link_to 'Choose Game Type', new_game_path %>
 
 
+
+
 <%= form_for(@game) do |f| %>
-<%= f.submit "Quick Play" %>
+  <%= f.hidden_field :player2, value: 0 %>
+  <% if current_user %>
+    <%= f.hidden_field :player1, value: current_user.id %>
+  <% else %>
+    <%= f.hidden_field :player1, value: -1 %>  
+  <% end %>
+  <%= f.submit "Quick Play" %>
+<% end %>
+
+
 
 <br>
 <%= link_to 'Leaderboard', users_path %>
-
-
-<% end %>
