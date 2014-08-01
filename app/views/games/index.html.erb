@@ -13,7 +13,7 @@
 <% if current_user %><br>
 </div>
   <table>
-    GAMES YOU'VE BEEN CHALLENGED TO
+    GAMES YOU'VE BEEN CHALLENGED TO:
     <tr>
       <th><%= link_to "Game id", :sort => "id" %></th>
       <th><%= link_to "Challenger", :sort => "player1" %></th>
@@ -22,14 +22,14 @@
     </tr>
   <% @games.each do |game| %>
     <% if game.player2 %>
-      <% if game.player2 != 0 %>
-        <% if game.player1 == current_user.id %>
+      <%# if game.player2 != 0 %>
+        <% if game.player2 == current_user.id %>
           <% if game.winner == nil %>
           <tr>
             <td><%= game.id %></td>
-            <%challenger = User.find(game.player2)%>
+            <%challenger = User.find(game.player1)%>
             <td><%= challenger.username.capitalize %></td>
-            <% if game.first_move == game.player2 %>
+            <% if game.first_move == game.player1 %>
             <% firstmover = challenger.username.capitalize %>
             <% else %>
             <% firstmover = current_user.username.capitalize %>
@@ -40,7 +40,7 @@
           </tr>
           <% end %>
         <% end %>
-      <% end %>
+      <%# end %>
     <% end %>
   <% end %>
   </table>

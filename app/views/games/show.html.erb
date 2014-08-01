@@ -1,14 +1,11 @@
-
-<!-- You have first move <%#= first_mover %>
- -->
 <% if @game.player2 != 0 %>
 
   <% if current_user.id == @game.next_player%>    
     <% if @game.winner %>
     YOU LOSE <%= current_user.username.upcase%>!!!!
     <% end %>
-  <br>
-        <%= render "form" %>
+    <br>
+    <%= render "form" %>
   <% else %>
     <% if @game.winner %>
       YOU WIN <%= current_user.username.upcase%>!!!!<br>
@@ -18,7 +15,8 @@
     <% end %>
 
   <% end %>
-<% else %>
+
+<% elsif @game.player2 == 0 %>
   <%= render "form" %>
 <% end %>
 

@@ -17,7 +17,7 @@ class MovesController < ApplicationController
         if @game.game_winner?
           @game.winner = @move.user_id
           @game.save
-          redirect_to :back, notice: "You've Won...well you've lost, but you win! "
+          redirect_to :back, notice: "You've Lost...well you've won, but you lose!"
         elsif @game.no_winner?
           redirect_to :back, notice: "No Winner"  
         else
@@ -26,7 +26,7 @@ class MovesController < ApplicationController
         @move_comp.save
           if @game.game_winner?
             @game.save
-            redirect_to :back, notice: "You've Lost...well you've won, but you lose! "
+            redirect_to :back, notice: "You've Won...well you've lost, but you win!"
           elsif @game.no_winner?
             redirect_to :back, notice: "No Winner"
           else

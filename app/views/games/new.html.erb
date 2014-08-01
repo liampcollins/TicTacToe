@@ -4,12 +4,8 @@
 <div id = "play_computer">
 <%= form_for(@game) do |f| %>
   <%= f.hidden_field :player2, value: 0 %>
-  <% if current_user %>
     <%= f.hidden_field :player1, value: current_user.id %>
-  <% else %>
-    <%= f.hidden_field :player1, value: -1 %>  
-  <% end %>
-  <%= f.submit "Play To Lose V Our Super Loser-Computer", :id => 'button' %>
+  <%= f.submit "Play To Lose V Our Super Loser-Computer" %>
 <% end %>
 </div>
 

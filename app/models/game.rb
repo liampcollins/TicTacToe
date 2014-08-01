@@ -61,7 +61,9 @@ class Game < ActiveRecord::Base
   end
 
   def no_winner?
-    moves_taken = moves.map do |move| 
+    
+    @result = false
+    moves_taken = moves.all.map do |move| 
     move[:cell_chosen] 
     end
     moves_taken.delete(nil)
@@ -70,7 +72,6 @@ class Game < ActiveRecord::Base
     else
       return false
     end
-    moves_left = numbers - moves_taken
   end
 
   def swap_player

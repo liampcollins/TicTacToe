@@ -1,15 +1,15 @@
 class GamesController < ApplicationController
 
-
+  # Home Page for games
   def index
     @games = Game.all
     @game = Game.new
   end
 
+  # Show 1 game
   def show
     @move = Move.new()
     @game = Game.find(params[:id])
-    
 
     if @game.moves.length == 0
       if @game.first_move == 1
@@ -19,20 +19,7 @@ class GamesController < ApplicationController
       end
     end
 
-
-    # #IF USER HAS SELECTED @ PLAYER BUT BOTH PLAYERS NOT SELECTED REDIRECT
-
-    #    unless @game.player1  @game.player2 
-    #     redirect_to new_game_path, notice: "You must select 2 players to play a 2-player game"
-    #   end
-    # end
-
-
-
-  
-
-
-# DEFINING @NUMBERS ARRAY WHICH HOLDS AVAILABLE SPACES, Xs and Ox.
+    # DEFINING @NUMBERS ARRAY WHICH HOLDS AVAILABLE SPACES, Xs and Ox.
     @numbers = [*1..9]
     @xs = @game.moves.where(user_id: @game.player1).map { |move|  move.cell_chosen}
     @os = @game.moves.where(user_id: @game.player2).map { |move|  move.cell_chosen}
@@ -54,45 +41,33 @@ class GamesController < ApplicationController
     end 
   end
 
-
-
-
   def new
-  
-  @game = Game.new
+    @game = Game.new
   end
-  #current_user.current_game.move.new
 
 
-
-
-
+  # Post
   def create
     @game = Game.new(params[:game])
+
     if @game.player1 == @game.player2
      redirect_to new_game_path, notice: "You can't play a 2-player against yourself!!"
-    elsif @game.first_move
-      if !@game.player2
-        redirect_to new_game_path, notice: "You need to pick a player to play against!!"
-      else
-        if @game.save
-        @numbers = [*1..9] 
-        @move = Move.new()
+     
+    elsif !@game.player2
+      redirect_to new_game_path, notice: "You need to pick a player to play against!!"
 
-        redirect_to @game
-        end
-      end
+    elsif @game.save
+      @numbers = [*1..9] 
+      @move = Move.new()
+      redirect_to @game
     end
   end
-
 
   def destroy
     @game = Game.find(params[:id])
     @game.destroy
     redirect_to root_path
   end
-
-
 
 end
 
