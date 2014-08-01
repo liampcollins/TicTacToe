@@ -5,16 +5,16 @@
 
   <% if current_user.id == @game.next_player%>    
     <% if @game.winner %>
-    YOU LOSE!!!!
+    YOU LOSE <%= current_user.username.upcase%>!!!!
     <% end %>
   <br>
         <%= render "form" %>
   <% else %>
     <% if @game.winner %>
-      YOU WIN!!!!
+      YOU WIN <%= current_user.username.upcase%>!!!!<br>
       <%= render "form" %>
     <% else %>
-      Not your turn  
+      Your opponent is taking their turn. Please refresh in a moment to see if it's your turn.  
     <% end %>
 
   <% end %>

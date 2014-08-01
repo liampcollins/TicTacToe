@@ -9,12 +9,19 @@
 <body>
   <nav>
    <% if current_user %><br>
+
      Hello, <%= current_user.username.capitalize %> <br>
-     <%= link_to 'Logout |', logout_path, method: :delete %><br>
+     ---------------<br>
      <%= link_to 'Home', games_path %><br>
+     ---------------<br>
+     <%= link_to 'Logout', logout_path, method: :delete %><br>
+     
+
     <% else %>
-     <%= link_to 'Please login |', login_path %><br>
-     <%= link_to 'Sign Up |', signup_path %><br>
+     <%= link_to 'Please login', login_path %><br>
+     ---------------<br>
+     <%= link_to 'Sign Up', signup_path %><br>
+     ---------------<br>
      <%= link_to 'Home', games_path %><br>
 
     <% end %>

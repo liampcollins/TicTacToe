@@ -1,4 +1,7 @@
 
+
+
+<!-- <div class = "Game"> -->
 <% if @game.winner %>
   
 
@@ -32,8 +35,14 @@
           <div class="field">
             <%= f.hidden_field :user_id, value: @game.player1  %>
           </div>
-        <% end%>   
-        <div class="cell_button"><%= f.submit "#{n}" %></div>
+        <% end%>
+
+
+        <div ><%= f.submit "#{n}", :class => 'damn_button', :height => "100" %></div>
+
+
+
+
       <% end %>
     <% else %>
       <%= n %>

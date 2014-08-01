@@ -1,7 +1,7 @@
 <br>
 <br>
 
-
+<div id = "play_computer">
 <%= form_for(@game) do |f| %>
   <%= f.hidden_field :player2, value: 0 %>
   <% if current_user %>
@@ -9,20 +9,17 @@
   <% else %>
     <%= f.hidden_field :player1, value: -1 %>  
   <% end %>
-  <%= f.submit "Play To Lose V Our Super Loser-Computer" %>
+  <%= f.submit "Play To Lose V Our Super Loser-Computer", :id => 'button' %>
 <% end %>
+</div>
 
 <br>
 <br>
 <br>
-
+<div id = "play_computer">
 OR ELSE CHALLENGE SOMEONE
-
 <%= form_for(@game) do |f| %>
-
-Have condition that says log in to play two player
   
-
     <%= f.hidden_field :player1, value: current_user.id %> 
     Player 1: <%= current_user.username %>
   <br>
@@ -32,8 +29,10 @@ Have condition that says log in to play two player
   <%= f.label :first_move, "Click to let them have first move" %><br />
   <%= f.check_box :first_move, {:checked=>false}, "2", "1" %>
   <br>
-  <%= f.submit "Start 2 Player Game" %>
+  <%= f.submit "Start 2 Player Game", :id => 'button'%>
 <% end %>
+</div>
+
 
 
 

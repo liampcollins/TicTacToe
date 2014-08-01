@@ -23,29 +23,31 @@
   <% if players.count(user.id) == 0 %>
     <% user.win_precentage = 0 %>
   <%else%>
-    <%user.win_precentage =  w.count(user.id) / players.count(user.id) %> 
+    <%user.win_precentage =  (w.count(user.id)).to_f / (players.count(user.id)).to_f %> 
     <% end %>
   <% end %>
-
+<div class="leaderboard">
 <table>
   <tr>
     <th><%= link_to "Name", :sort => "username" %></th>
     <th><%= link_to "ID", :sort => "id" %></th>
     <th><%= link_to "Wins", :sort => "wins" %></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th><%= link_to "Win Percentage", :sort => "win_precentage" %></th>
+
+    
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.username %></td>
+    <td><%= user.username.capitalize   %></td>
     <td><%= user.id %></td>
     <td><%= user.wins %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= user.win_precentage.round(2) %></td>
+
+    
   </tr>
 <% end %>
 </table>
+</div>
 
 

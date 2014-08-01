@@ -10,11 +10,11 @@ Project1::Application.routes.draw do
 
   resources :sessions, only: :create
 
-  resources :users
+  resources :users, only: [:create, :index]
 
 
-  resources :games
-  resources :moves
+  resources :games, except: :destroy
+  resources :moves, except: [:destroy, :show]
 
 
 

@@ -2,6 +2,7 @@
 * {
   padding: 0;
   margin: 0;
+  text-align: center;
 }
 
 body {
@@ -35,7 +36,8 @@ nav {
   width: 10%;
   top: 0;
   left: 0;
-  
+  padding-top: 40px;
+  line-height: 50px;
 }
 
 #container {
@@ -49,11 +51,65 @@ nav {
   border-radius: 10%;
 }
 
-
-table {
-  text-align: center;
+a {
+  text-decoration: none;
+  color: rgba(0,0,0,0.5);
 }
 
+a:hover {
+  background-color:rgba(0,0,0,0.2)
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.leaderboard table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  font-size: 30px;
+}
+
+th {
+  background-color:rgba(0,0,0,0.2);
+  width: 100px;
+}
+
+#homepage_options {
+  line-height: 50px;
+  font-size: 30px;
+}
+
+/*img {
+  opacity: 0.3;
+}
+*/
+
+
+input {
+  height: 100px;
+  width: 500px;
+  opacity: 0.5;
+  font-size: 20px;
+}
+#new_move > div:nth-child(5) > input {
+  height: 100px;
+  width: 100px;
+  opacity: 0.5;
+}
+
+
+.field input {
+  height: 40px;
+}
 
 
 

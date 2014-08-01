@@ -1,36 +1,44 @@
 
 <h1>WELCOME TO TIC TAC TOE</h1>
 
-
-<%= link_to 'Choose Game Type', new_game_path %>
-
-<br>
+<div id = "homepage_options">
+  <% if current_user %><br>
+<%= link_to 'Choose Game Type', new_game_path %><br>
+  <% else %>
+  <%= link_to "Log-in to play", login_path %>
+  <% end %>
+</br>
 <%= link_to 'Leaderboard', users_path %>
-
-<% if current_user %>
-GAMES YOU'VE BEEN CHALLENGED TO
+</br>
+<% if current_user %><br>
+</div>
   <table>
+    GAMES YOU'VE BEEN CHALLENGED TO
     <tr>
       <th><%= link_to "Game id", :sort => "id" %></th>
-      <th><%= link_to "Player 1", :sort => "player1" %></th>
-      <th><%= link_to "Player 2", :sort => "player2" %></th>
+      <th><%= link_to "Challenger", :sort => "player1" %></th>
       <th><%= link_to "First Move", :sort => "first_move" %></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      
     </tr>
   <% @games.each do |game| %>
     <% if game.player2 %>
-      <% if game.player1 == current_user.id || game.player2 == current_user.id %>
-        <% if game.winner == nil %>
-        <tr>
-          <td><%= game.id %></td>
-          <td><%= game.player1 %></td>
-          <td><%= game.player2 %></td>
-          <td><%= game.first_move %></td>
-          <td><%= link_to 'Play', game_path(game.id) %></td>
-          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+      <% if game.player2 != 0 %>
+        <% if game.player1 == current_user.id %>
+          <% if game.winner == nil %>
+          <tr>
+            <td><%= game.id %></td>
+            <%challenger = User.find(game.player2)%>
+            <td><%= challenger.username.capitalize %></td>
+            <% if game.first_move == game.player2 %>
+            <% firstmover = challenger.username.capitalize %>
+            <% else %>
+            <% firstmover = current_user.username.capitalize %>
+            <% end %>
+            <td><%= firstmover %></td>
+            <td><%= link_to 'Play', game_path(game.id) %></td>
+            <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
@@ -38,6 +46,6 @@ GAMES YOU'VE BEEN CHALLENGED TO
   </table>
 <% else%>
 
-<%= link_to 'Log-in to see if you've been challenged', login_path %><br>
+<%= link_to "Log-in to see if you've been challenged", login_path %><br>
 
 <% end %>

@@ -22,23 +22,14 @@ class GamesController < ApplicationController
 
     # #IF USER HAS SELECTED @ PLAYER BUT BOTH PLAYERS NOT SELECTED REDIRECT
 
-    # if @game.player1
-    #   if @game.player2 
-    #   else
+    #    unless @game.player1  @game.player2 
     #     redirect_to new_game_path, notice: "You must select 2 players to play a 2-player game"
     #   end
     # end
 
 
-    # if @game.player2?
-    # else
-    #   if current_user
-    #     @game.player1 = current_user.id
-    #   else
-    #     @game.player1 = 0
-    #   end
-    #   @game.player2 = 0
-    # end
+
+  
 
 
 # DEFINING @NUMBERS ARRAY WHICH HOLDS AVAILABLE SPACES, Xs and Ox.
@@ -78,13 +69,22 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(params[:game])
-    if @game.save
-      @numbers = [*1..9] 
-      @move = Move.new()
+    if @game.player1 == @game.player2
+     redirect_to new_game_path, notice: "You can't play a 2-player against yourself!!"
+    elsif @game.first_move
+      if !@game.player2
+        redirect_to new_game_path, notice: "You need to pick a player to play against!!"
+      else
+        if @game.save
+        @numbers = [*1..9] 
+        @move = Move.new()
 
-    redirect_to @game
+        redirect_to @game
+        end
+      end
     end
   end
+
 
   def destroy
     @game = Game.find(params[:id])
