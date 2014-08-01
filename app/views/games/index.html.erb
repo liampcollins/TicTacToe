@@ -1,4 +1,6 @@
 
+
+<div>
 <h1>WELCOME TO TIC TAC TOE</h1>
 
 <div id = "homepage_options">
@@ -48,3 +50,45 @@
 <%= link_to "Log-in to see if you've been challenged", login_path %><br>
 
 <% end %>
+
+</br>
+<% if current_user %><br>
+</div>
+  <table>
+    GAMES YOU'VE CHALLENGED PEOPLE TO:
+    <tr>
+      <th><%= link_to "Game id", :sort => "id" %></th>
+      <th><%= link_to "Challed", :sort => "player2" %></th>
+      <th><%= link_to "First Move", :sort => "first_move" %></th>
+      
+    </tr>
+  <% @games.each do |game| %>
+    <% if game.player2 %>
+      <% if game.player2 != 0 %>
+        <% if game.player1 == current_user.id %>
+          <% if game.winner == nil %>
+          <tr>
+            <td><%= game.id %></td>
+            <%challenger = User.find(game.player2)%>
+            <td><%= challenger.username.capitalize %></td>
+            <% if game.first_move == game.player2 %>
+            <% firstmover = challenger.username.capitalize %>
+            <% else %>
+            <% firstmover = current_user.username.capitalize %>
+            <% end %>
+            <td><%= firstmover %></td>
+            <td id = "play"><%= link_to 'Play Game', game_path(game.id) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  </table>
+<% else%>
+
+<%= link_to "Log-in to see if the games you've challenged people to", login_path %><br>
+
+<% end %>
+
+</div>
