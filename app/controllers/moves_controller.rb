@@ -15,7 +15,7 @@ class MovesController < ApplicationController
       else 
         # NEEDS TO BE REFACTORED
         if @game.game_winner?
-          @game.winner = @move.user_id
+          @game.winner = 0
           @game.save
           redirect_to :back, notice: "You've Lost...well you've won, but you lose!"
         elsif @game.no_winner?
@@ -25,7 +25,7 @@ class MovesController < ApplicationController
         @move_comp = @game.computer_move 
         @move_comp.save
           if @game.game_winner?
-            @game.winner = 0
+            @game.winner = @move.user_id
             @game.save
             redirect_to :back, notice: "You've Won...well you've lost, but you win!"
           elsif @game.no_winner?
