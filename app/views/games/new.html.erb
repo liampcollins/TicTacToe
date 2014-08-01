@@ -13,19 +13,22 @@
 <br>
 <br>
 <div id = "play_computer">
-OR ELSE CHALLENGE SOMEONE
+
+
+<div class="or_else">OR CHALLENGE SOMEONE....</div>
+
+
 <%= form_for(@game) do |f| %>
   
     <%= f.hidden_field :player1, value: current_user.id %> 
-    Player 1: <%= current_user.username %>
   <br>
-  <%= f.label :player2, "Who are you challenging?" %><br />
-  <%= f.collection_select :player2, User.all, :id, :username, prompt: true %>
+  <%= f.label :player2, "Who are you challenging?" %></br>
+  <%= f.collection_select :player2, User.all, :id, :username, prompt: true %></br>
   <br>
-  <%= f.label :first_move, "Click to let them have first move" %><br />
+  <%= f.label :first_move, "Click to let them have first move" %></br>
   <%= f.check_box :first_move, {:checked=>false}, "2", "1" %>
-  <br>
-  <%= f.submit "Start 2 Player Game", :id => 'button'%>
+  </br>
+  <%= f.submit "Start 2 Player Game"%>
 <% end %>
 </div>
 

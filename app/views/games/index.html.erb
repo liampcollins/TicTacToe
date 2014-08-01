@@ -35,8 +35,7 @@
             <% firstmover = current_user.username.capitalize %>
             <% end %>
             <td><%= firstmover %></td>
-            <td><%= link_to 'Play', game_path(game.id) %></td>
-            <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td id = "play"><%= link_to 'Play Game', game_path(game.id) %></td>
           </tr>
           <% end %>
         <% end %>

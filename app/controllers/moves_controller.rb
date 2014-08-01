@@ -25,6 +25,7 @@ class MovesController < ApplicationController
         @move_comp = @game.computer_move 
         @move_comp.save
           if @game.game_winner?
+            @game.winner = 0
             @game.save
             redirect_to :back, notice: "You've Won...well you've lost, but you win!"
           elsif @game.no_winner?
