@@ -13,3 +13,37 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require jquery-ui
+
+
+var myApp = myApp || {} 
+
+
+
+
+
+myApp.setUpEventListeners = function(){
+
+   $( "#challenged_div" ).on( "mouseover", function(){
+    $( "#challenged_table" ).slideDown()
+  }).on("mouseout", function(){
+    $( "#challenged_table" ).hide( "slow" )
+  });
+   $( "#challenger_title" ).on( "mouseover", function(){
+    $( "#challenger_table" ).slideDown()
+  }).on("mouseout", function(){
+    $( "#challenger_table" ).hide( "slow" )
+  });
+
+
+
+}
+
+$(document).ready(function(){
+ myApp.setUpEventListeners();
+})
+
+
+
+
+

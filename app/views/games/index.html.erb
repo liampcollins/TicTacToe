@@ -1,94 +1,95 @@
 
 
 <div>
-<h1>WELCOME TO TIC TAC TOE</h1>
+  <h1>WELCOME TO TIC TAC TOE</h1>
 
-<div id = "homepage_options">
-  <% if current_user %><br>
-<%= link_to 'Choose Game Type', new_game_path %><br>
-  <% else %>
-  <%= link_to "Log-in to play", login_path %>
-  <% end %>
-</br>
-<%= link_to 'Leaderboard', users_path %>
-</br>
-<% if current_user %><br>
-</div>
-  <table>
-    GAMES YOU'VE BEEN CHALLENGED TO:
-    <tr>
-      <th><%= link_to "Game id", :sort => "id" %></th>
-      <th><%= link_to "Challenger", :sort => "player1" %></th>
-      <th><%= link_to "First Move", :sort => "first_move" %></th>
-      
-    </tr>
-  <% @games.each do |game| %>
-    <% if game.player2 %>
-      <%# if game.player2 != 0 %>
-        <% if game.player2 == current_user.id %>
-          <% if game.winner == nil %>
-          <tr>
-            <td><%= game.id %></td>
-            <%challenger = User.find(game.player1)%>
-            <td><%= challenger.username.capitalize %></td>
-            <% if game.first_move == game.player1 %>
-            <% firstmover = challenger.username.capitalize %>
-            <% else %>
-            <% firstmover = current_user.username.capitalize %>
-            <% end %>
-            <td><%= firstmover %></td>
-            <td id = "play"><%= link_to 'Play Game', game_path(game.id) %></td>
-          </tr>
-          <% end %>
-        <% end %>
-      <%# end %>
+  <div id = "homepage_options">
+    <% if current_user %><br>
+    <%= link_to 'Choose Game Type', new_game_path %><br>
+    <% else %>
+    <%= link_to "Log-in to play", login_path %>
     <% end %>
-  <% end %>
-  </table>
-<% else%>
-
-<%= link_to "Log-in to see if you've been challenged", login_path %><br>
-
-<% end %>
-
-</br>
-<% if current_user %><br>
-</div>
-  <table>
-    GAMES YOU'VE CHALLENGED PEOPLE TO:
-    <tr>
-      <th><%= link_to "Game id", :sort => "id" %></th>
-      <th><%= link_to "Challed", :sort => "player2" %></th>
-      <th><%= link_to "First Move", :sort => "first_move" %></th>
-      
-    </tr>
-  <% @games.each do |game| %>
-    <% if game.player2 %>
-      <% if game.player2 != 0 %>
-        <% if game.player1 == current_user.id %>
-          <% if game.winner == nil %>
-          <tr>
-            <td><%= game.id %></td>
-            <%challenger = User.find(game.player2)%>
-            <td><%= challenger.username.capitalize %></td>
-            <% if game.first_move == game.player2 %>
-            <% firstmover = challenger.username.capitalize %>
-            <% else %>
-            <% firstmover = current_user.username.capitalize %>
+    </br>
+    <%= link_to 'Leaderboard', users_path %>
+    </br>
+    <% if current_user %><br>
+  </div>
+  <div id = "challenged_div">
+    <h3 id = "challenged_title">GAMES YOU'VE BEEN CHALLENGED TO:</h3>
+      <table id="challenged_table">
+        
+        <tr>
+          <th><%= link_to "Game id", :sort => "id" %></th>
+          <th><%= link_to "Challenger", :sort => "player1" %></th>
+          <th><%= link_to "First Move", :sort => "first_move" %></th>
+          
+        </tr>
+      <% @games.each do |game| %>
+        <% if game.player2 %>
+          <%# if game.player2 != 0 %>
+            <% if game.player2 == current_user.id %>
+              <% if game.winner == nil %>
+              <tr>
+                <td><%= game.id %></td>
+                <%challenger = User.find(game.player1)%>
+                <td><%= challenger.username.capitalize %></td>
+                <% if game.first_move == game.player1 %>
+                <% firstmover = challenger.username.capitalize %>
+                <% else %>
+                <% firstmover = current_user.username.capitalize %>
+                <% end %>
+                <td><%= firstmover %></td>
+                <td id = "play"><%= link_to 'Play Game', game_path(game.id) %></td>
+              </tr>
+              <% end %>
             <% end %>
-            <td><%= firstmover %></td>
-            <td id = "play"><%= link_to 'Play Game', game_path(game.id) %></td>
-          </tr>
+          <%# end %>
+        <% end %>
+      <% end %>
+      </table>
+    <% else%>
+
+    <%= link_to "Log-in to see if you've been challenged", login_path %><br>
+
+    <% end %>
+  </div>
+  </br>
+  <% if current_user %><br>
+  <h3 id="challenger_title">GAMES YOU'VE CHALLENGED PEOPLE TO:</h3>
+    <div><table id="challenger_table">
+      <tr>
+        <th><%= link_to "Game id", :sort => "id" %></th>
+        <th><%= link_to "Challed", :sort => "player2" %></th>
+        <th><%= link_to "First Move", :sort => "first_move" %></th>
+        
+      </tr>
+    <% @games.each do |game| %>
+      <% if game.player2 %>
+        <% if game.player2 != 0 %>
+          <% if game.player1 == current_user.id %>
+            <% if game.winner == nil %>
+            <tr>
+              <td><%= game.id %></td>
+              <%challenger = User.find(game.player2)%>
+              <td><%= challenger.username.capitalize %></td>
+              <% if game.first_move == game.player2 %>
+              <% firstmover = challenger.username.capitalize %>
+              <% else %>
+              <% firstmover = current_user.username.capitalize %>
+              <% end %>
+              <td><%= firstmover %></td>
+              <td id = "play"><%= link_to 'Play Game', game_path(game.id) %></td>
+            </tr>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
-  </table>
-<% else%>
+    </table></div>
+  <% else%>
 
-<%= link_to "Log-in to see if the games you've challenged people to", login_path %><br>
+  <%= link_to "Log-in to see if the games you've challenged people to", login_path %><br>
 
 <% end %>
-
 </div>
+
