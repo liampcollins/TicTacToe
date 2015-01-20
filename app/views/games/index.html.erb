@@ -56,7 +56,7 @@
   </br>
   <% if current_user %><br>
   <h3 id="challenger_title">GAMES YOU'VE CHALLENGED PEOPLE TO:</h3>
-    <div><table id="challenger_table">
+    <div id="challenger_table_container"><table id="challenger_table">
       <tr>
         <th><%= link_to "Game id", :sort => "id" %></th>
         <th><%= link_to "Challed", :sort => "player2" %></th>

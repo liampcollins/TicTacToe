@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(:version => 20140731131547) do
     t.integer  "winner"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "next_move"
     t.integer  "next_player"
   end
 
